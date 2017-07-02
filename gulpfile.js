@@ -1,5 +1,10 @@
-var gulp = require('gulp');
-var webserver = require('gulp-webserver');
+let gulp = require('gulp');
+let minifyCss = require("gulp-minify-css");
+let uglify = require("gulp-uglify");
+let webserver = require('gulp-webserver');
+let gutil = require('gulp-util');
+const babel = require('gulp-babel');
+const sass = require('gulp-sass');
 
 gulp.task('http', function() {
   gulp.src('./')
@@ -7,6 +12,24 @@ gulp.task('http', function() {
       livereload: true,
       open: false
     }));
-})
+});
 
-gulp.task('default', ['http']);
+gulp.task('minify-css', function () {
+    gulp.src('./*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(minifyCss())
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('minify-js', function () {
+    gulp.src('./support-mail.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(uglify())
+    .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
+    .pipe(gulp.dest('./dist'))
+});
+
+gulp.task('server', ['minify-css', 'minify-js', 'http']);
+gulp.task('default', ['minify-css', 'minify-js']);

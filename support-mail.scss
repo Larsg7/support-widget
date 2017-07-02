@@ -6,6 +6,9 @@
     Author: Lars Gröber
  */
 
+$background-color: #005EAA;
+$background-color-accent: #e67e22;
+
 #support-mail-main {
     position: absolute;
     width: 600px;
@@ -24,7 +27,7 @@
     position: absolute;
     top: -50px;
     right: 0;
-    background-color: #005EAA;
+    background-color: $background-color;
     height: 50px;
     width: 50px;
     border-top-left-radius: 20px;
@@ -42,7 +45,7 @@
 }
 
 #support-mail-form {
-    background-color: #005EAA;
+    background-color: $background-color;
     border-top-left-radius: 20px;
     display: none;
     padding: 20px;
@@ -50,7 +53,7 @@
 }
 
 #support-mail-submit {
-    background-color: #e67e22;
+    background-color: $background-color-accent;
     color: white;
     border: none;
 }
