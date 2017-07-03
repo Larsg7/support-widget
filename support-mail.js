@@ -98,6 +98,10 @@ $(() => {
       showErrors('Bitte gebe Deine E-Mail an, so dass wir Dir antworten können.');
       return false;
     }
+    if (!validateEmail(values["user_mail"])) {
+      showErrors('Bitte gebe eine valide E-Mail an.');
+      return false;
+    }
     if (!(values["subject"] = $('#support-mail-subject').val())) {
       showErrors('Bitte gebe einen Betreff an.');
       return false;
@@ -121,5 +125,10 @@ $(() => {
     $('#support-mail-info').hide();
     $('#support-mail-form-inputs').slideUp();
     $('#support-mail-errors .alert').css('margin-bottom', 0);
+  }
+
+  let validateEmail = (email) => {
+    let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Za-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/;
+    return re.test(email);
   }
 });

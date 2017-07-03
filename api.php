@@ -38,14 +38,16 @@ if (isset($_GET)) {
     
     $subject = "[Support] " . $subject . " - type: " . $messageType;
 
-    $info = "This message was send by PhysikOnline's support-widget.\n";
+    $info = "This message was send by PhysikOnline's support-widget.\n\n";
     $info .= "The user's name is:  " . $userName . "\n";
     $info .= "The user's email is: " . $userMail . "\n";
     $info .= "\nThe user left the following message:\n\n";
     $body = $info . $body;
 
     Mail::send($subject, $body, $address);
-    echo "Success";    
+    echo "Success";
+} else {
+    errorHandler();
 }
 
 function errorHandler() {
