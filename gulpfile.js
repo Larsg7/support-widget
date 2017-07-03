@@ -30,6 +30,10 @@ gulp.task('minify-js', function () {
     .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
     .pipe(gulp.dest('./dist'))
 });
-
-gulp.task('server', ['minify-css', 'minify-js', 'http']);
+gulp.task('minify-watch', () => {
+  gulp.watch('*.js', ['minify-js']);
+  gulp.watch('*.scss', ['minify-css']);
+  gulp.run('http');
+});
+gulp.task('server', ['http']);
 gulp.task('default', ['minify-css', 'minify-js']);

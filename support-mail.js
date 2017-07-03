@@ -47,6 +47,7 @@ $(() => {
             <textarea class="form-control" rows="5" id="support-mail-body"></textarea>
           </div>
           <button class="btn btn-default" id="support-mail-submit">Absenden</button>
+          <div id="support-mail-poweredByPO">Build with <span style="color: #FF8E8E;font-size: 140%;">♥</span> by <a href="https://physikonline.uni-frankfurt.de">PhysikOnline</a></div>
       </div>
     </div>
 </div>
@@ -55,7 +56,7 @@ $(() => {
   // toggle window
   $('#support-mail-icon').click(() => {
     $('#support-mail-form').slideToggle();
-    $('#support-mail-icon-icon').toggleClass('glyphicon-question-sign glyphicon-menu-down');
+    $('#support-mail-icon-icon').toggleClass('glyphicon-question-sign glyphicon-menu-down glyphicon-chevron-down');
   });
 
   // submit form
