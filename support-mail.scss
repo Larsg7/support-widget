@@ -1,7 +1,6 @@
 /*
     Stylesheet for PhysikOnline's support widget.
     Include this and the corresponding 'support-mail.js' file to activate the widget.
-    TODO: It does not work perfectly on small screens, in landscape the close button is not clickable.
 
     Author: Lars Gröber
  */
@@ -9,30 +8,27 @@
 $background-color: #005EAA;
 $background-color-accent: #e67e22;
 $font-color: white;
-$full-width: 600px;
-$max-height: 70vh;
+$full-width: 600px;     // max width of widget
+$max-height: 70vh;      // max height w/o icon
 $icon-height: 50px;
-$small-screen: 1000px;
 
 // main-div,
 #support-mail-main {
   position: fixed;
-  width: $full-width;
   bottom: 0;
   right: 0;
-
-  @media (max-width: $small-screen) {
-    max-width: 100%;
-  }
+  width: $full-width;
+  max-width: 100%;
 }
 
+// help/close icon
 #support-mail-icon {
   position: absolute;
-  top: -$icon-height;
   right: 0;
-  background-color: $background-color;
+  top: -$icon-height;
   height: $icon-height;
   width: $icon-height;
+  background-color: $background-color;
   border-top-left-radius: 20px;
   cursor: pointer;
 
@@ -73,12 +69,14 @@ $small-screen: 1000px;
   resize: none;
 }
 
+// smiley in success/error message
 #support-mail-error-smiley {
   text-align: center;
   font-size: 100px;
   margin-bottom: 30px;
 }
 
+// "build with *heart* by PO"
 #support-mail-poweredByPO {
   float: right;
 
