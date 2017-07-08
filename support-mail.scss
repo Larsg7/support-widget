@@ -9,69 +9,84 @@
 $background-color: #005EAA;
 $background-color-accent: #e67e22;
 $font-color: white;
+$full-width: 600px;
+$max-height: 80vh;
+$icon-height: 50px;
+$small-screen: 1000px;
 
+// main-div,
 #support-mail-main {
-    position: absolute;
-    width: 600px;
-    right: 0px;
-    bottom:0;
-}
+  position: fixed;
+  width: $full-width;
+  bottom: 0;
+  right: 0;
 
-@media (max-width: 1000px) {
-    #support-mail-main {
-        right: 0;
-        max-width: 100%;
-    }
+  @media (max-width: $small-screen) {
+    max-width: 100%;
+  }
 }
 
 #support-mail-icon {
-    position: absolute;
-    top: -50px;
-    right: 0;
-    background-color: $background-color;
-    height: 50px;
-    width: 50px;
-    border-top-left-radius: 20px;
-    cursor: pointer;
-}
+  position: absolute;
+  top: -$icon-height;
+  right: 0;
+  background-color: $background-color;
+  height: $icon-height;
+  width: $icon-height;
+  border-top-left-radius: 20px;
+  cursor: pointer;
 
-#support-mail-icon > span {
+  span {
     left: 50%;
     top: 50%;
     padding: 10px;
     transform: translate(-50%, -50%);
     font-size: 30px;
     color: $font-color;
+  }
 }
 
+// actual widget content
 #support-mail-form {
-    background-color: $background-color;
+  background-color: $background-color;
+  max-height: $max-height;
+  overflow-y: auto;
+  display: none;
+  border-top: $background-color 20px solid;
+  padding: 0 20px 20px 20px;
+  color: $font-color;
+
+  @media (min-width: $full-width) {
     border-top-left-radius: 20px;
-    display: none;
-    padding: 20px;
-    color: $font-color;
+  }
 }
 
+// style submit-button
 #support-mail-submit {
-    background-color: $background-color-accent;
-    color: $font-color;
-    border: none;
+  background-color: $background-color-accent;
+  color: $font-color;
+  border: none;
 }
 
+// make textarea not resizable
 #support-mail-body {
-    resize: none;
+  resize: none;
 }
 
 #support-mail-error-smiley {
-    text-align: center;
-    font-size: 100px;
-    margin-bottom: 30px;
+  text-align: center;
+  font-size: 100px;
+  margin-bottom: 30px;
 }
 
 #support-mail-poweredByPO {
-    float: right;
+  float: right;
+
+  a {
+    color: $font-color;
+  }
 }
 
-#support-mail-poweredByPO > a {
-    color: $font-color;
+.no-margin {
+  margin: 0;
 }

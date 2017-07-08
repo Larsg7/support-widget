@@ -10,6 +10,10 @@
  * Author: Lars Gröber
  */
 
+// globals
+const API_URL = 'http://physikonline.uni-frankfurt.de/support-mail/api.php';
+const SUPPORT_MAIL = 'team@elearning-physik.uni-frankfurt.de';
+
 $(() => {
   $("body").append(`
 <div id='support-mail-main'>
@@ -18,7 +22,6 @@ $(() => {
     </div>
     <div id="support-mail-form">
       <p id="support-mail-info">Du brauchst Hilfe oder hast einen Vorschlag zur Verbesserung unserer Dienste? Dann schreibe uns!</p>
-      <div id="support-mail-errors"></div>
       <div id="support-mail-form-inputs">
           <div class="form-group">
             <label for="support-mail-name">Dein Name:</label>
@@ -46,6 +49,7 @@ $(() => {
             <label for="support-mail-body">Deine Nachricht:</label>
             <textarea class="form-control" rows="5" id="support-mail-body"></textarea>
           </div>
+          <div id="support-mail-errors"></div>
           <button class="btn btn-default" id="support-mail-submit">Absenden</button>
           <div id="support-mail-poweredByPO">Build with <span style="color: #FF8E8E;font-size: 140%;">♥</span> by <a href="https://physikonline.uni-frankfurt.de">PhysikOnline</a></div>
       </div>
@@ -63,27 +67,35 @@ $(() => {
   $('#support-mail-submit').click(() => {
     let check = checkForm();
     if (check) {
-      $.get('http://physikonline.uni-frankfurt.de/support-mail/api.php', check, (data) => {
+      $.get(API_URL, check, () => {
         showErrors("");
-        $('#support-mail-errors').html(`<div class="alert alert-success">
+        removeInputs();
+        showFinalMessage(`<div class="alert alert-success no-margin">
                     <div id="support-mail-error-smiley">:)</div>
                     Deine Nachricht wurde erfolgreich verschickt!
                     <br>
                     Wir werden uns so schnell wie möglich um Dein Anliegen kümmern!</div>`);
-        removeInputs();
       }).fail((error) => {
         sendError(error);
       })
     }
 
     let sendError = (error) => {
-      showErrors(`<div id="support-mail-error-smiley">:(</div>
-                        Sorry, irgendetwas hat nicht funktioniert!
-                        <br>
-                        Bitte kontaktiere uns über <a href="team@elearning.physik.uni-frankfurt.de">team@elearning-physik.uni-frankfurt.de</a>.<br>
-                        Der Server hat mit '${error.statusText}: ${error.responseText}' geantwortet.`);
-      console.log(error);
+      let email = `<a href="mailto:${SUPPORT_MAIL}">${SUPPORT_MAIL}</a>`;
+      let message = "";
+      if (error.readyState === 0) {
+        // xhr request was not able to send, maybe there is no internet connection?
+        message = `Überprüfe bitte, ob du mit dem Internet verbunden bist. Falls das Problem auch weiterhin besteht, kontaktiere uns bitte über ${email}.`;
+      } else {
+        message = `Bitte kontaktiere und über ${email}.<br>
+                   Der Server hat mit '${error.status} - ${error.statusText}: ${error.responseText}' geantwortet.`
+      }
       removeInputs();
+      showFinalMessage(`<div class="alert alert-danger no-margin">
+                        <div id="support-mail-error-smiley">:(</div>
+                        Sorry, irgendetwas hat nicht funktioniert!<br>
+                        ${message}
+                        </div>`);
     }
   });
 
@@ -120,12 +132,15 @@ $(() => {
     $('#support-mail-errors').html(html);
   };
 
+  let showFinalMessage = (message) => {
+    $('#support-mail-form').prepend(message)
+  };
+
   // hide form inputs and info text
   let removeInputs = () => {
     $('#support-mail-info').hide();
     $('#support-mail-form-inputs').slideUp();
-    $('#support-mail-errors .alert').css('margin-bottom', 0);
-  }
+  };
 
   let validateEmail = (email) => {
     let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Za-z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/;
