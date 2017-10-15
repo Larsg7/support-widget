@@ -11,7 +11,7 @@
  */
 
 // globals
-const API_URL = 'http://physikonline.uni-frankfurt.de/support-mail/api.php';
+const API_URL = 'https://physikonline.uni-frankfurt.de/support-mail/api.php';
 const SUPPORT_MAIL = 'team@elearning-physik.uni-frankfurt.de';
 
 $(() => {
